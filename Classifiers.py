@@ -1,6 +1,7 @@
 from sklearn import svm
 from sklearn.metrics import classification_report,accuracy_score
 from sklearn.neural_network import MLPClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 from sklearn.gaussian_process import GaussianProcessClassifier
@@ -17,7 +18,7 @@ class Classifiers:
         self.y_test = y_test
         self.names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Gaussian Process",
          "Decision Tree", "Random Forest", "Neural Net", "AdaBoost",
-         "Naive Bayes", "QDA"]
+         "Naive Bayes", "Logistic Regression", "QDA"]
 
         self.classifiers = [
             KNeighborsClassifier(3),
@@ -29,14 +30,18 @@ class Classifiers:
             MLPClassifier(alpha=1, max_iter=1000),
             AdaBoostClassifier(),
             GaussianNB(),
+            LogisticRegression(),
             QuadraticDiscriminantAnalysis()]
 
     def run_all(self):
+        accuracies = []
         for name, clf in zip(self.names, self.classifiers):
             clf.fit(self.x_train, self.y_train)
             y_pred = clf.predict(self.x_test)
             print("These results are belongs to: " + name)
             self.print_info(y_pred)
+            accuracies.append(accuracy_score(self.y_test, y_pred))
+        return  accuracies
 
     def print_info(self, y_pred):
         print("Accuracy: "+str(accuracy_score(self.y_test, y_pred)))

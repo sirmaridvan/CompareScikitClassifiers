@@ -10,13 +10,15 @@ Classifiers:
     *Neural Net
     *AdaBoost
     *Naive Bayes
+    *Logistic Regression
     *QDA
 
 Feature Descriptors:
     *Histogram of Oriented Gradients
     *HuMoments
     *Haralick
-    
+    *Color Histogram
+
 Dataset:
     The dataset consists of image chips extracted from Planet satellite imagery collected over the San Francisco Bay and San Pedro Bay areas of California.
     It includes 4000 80x80 RGB images labeled with either a "ship" or "no-ship" classification.
@@ -25,5 +27,6 @@ Dataset:
 Related Kaggle Problem:
     https://www.kaggle.com/rhammell/ships-in-satellite-imagery
 
-Start point kernel:
+Inspired Works:
     https://www.kaggle.com/manikg/training-svm-classifier-with-hog-features
+    https://gogul.dev/software/image-classification-python
