@@ -11,10 +11,10 @@ images, labels = data_reader.get_data()
 feature_extractor = FeatureExtractor(images, labels)
 feature_descriptors = feature_extractor.get_all_feature_descriptors()
 
-classifier_names = ["Nearest Neighbors", "Linear SVM", "RBF SVM", "Gaussian Process",
+classifier_names = [" ", "Nearest Neighbors", "Linear SVM", "RBF SVM", "Gaussian Process",
  "Decision Tree", "Random Forest", "Neural Net", "AdaBoost",
  "Naive Bayes", "Logistic Regression", "QDA"]
-feature_descriptors_names = {"Histogram Of Gradient", "Haralick", "HuMoments", "Color Histogram"}
+feature_descriptors_names = ["Histogram Of Gradient", "Haralick", "HuMoments", "Color Histogram"]
 list_accuracies = []
 
 #red is the best feature descriptor for the classifier
@@ -35,11 +35,11 @@ def highlight_max2(data, color='yellow'):
         return pd.DataFrame(np.where(is_max, attr, ''),
                             index=data.index, columns=data.columns)
 
-for fd in feature_descriptors:
+for i, fd in enumerate(feature_descriptors):
     data_manager = DataManager()
     x_train, x_test, y_train, y_test = data_manager.split(fd, labels, 80)
     classifiers = Classifiers(x_train, x_test, y_train, y_test)
-    accuracies = classifiers.run_all()
+    accuracies = classifiers.run_all(feature_descriptors_names[i])
     list_accuracies.append(accuracies)
 
 pd.set_option('display.max_rows', None)
@@ -47,7 +47,6 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', -1)
 df = pd.DataFrame(list_accuracies, columns=classifier_names)
-df.index = feature_descriptors_names
 df = df.T
 df.style.apply(highlight_max)
 df.style.apply(highlight_max2, color='darkorange', axis=None)

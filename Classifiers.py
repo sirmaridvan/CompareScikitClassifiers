@@ -33,14 +33,14 @@ class Classifiers:
             LogisticRegression(),
             QuadraticDiscriminantAnalysis()]
 
-    def run_all(self):
-        accuracies = []
+    def run_all(self, fd_name):
+        accuracies = [fd_name]
         for name, clf in zip(self.names, self.classifiers):
             clf.fit(self.x_train, self.y_train)
             y_pred = clf.predict(self.x_test)
             print("These results are belongs to: " + name)
             self.print_info(y_pred)
-            accuracies.append(accuracy_score(self.y_test, y_pred))
+            accuracies.append(str(accuracy_score(self.y_test, y_pred)))
         return  accuracies
 
     def print_info(self, y_pred):
